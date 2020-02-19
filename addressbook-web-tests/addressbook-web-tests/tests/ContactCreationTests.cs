@@ -15,14 +15,9 @@ namespace addressbook_web_tests
         [Test]
         public void ContactCreationTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            InitContactCreation();
             ContactData contact = new ContactData("TestFirstName", "TestLastName");
             contact.NickName = "TestNickname";
-            FillContactForm(contact);
-            SubmitContactCreation();
-            Logout();
+            app.Contacts.Create(contact);
         }
 
 
