@@ -14,12 +14,56 @@ namespace addressbook_web_tests
 
         public ContactHelper(ApplicationManager manager) : base(manager) { }
 
+
+
         public ContactHelper Create(ContactData contact)
         {
             InitContactCreation();
             FillContactForm(contact);
             SubmitContactCreation();
             manager.Auth.Logout();
+            return this;
+        }
+
+        public ContactHelper Modify(int index, ContactData newData)
+        {
+            InitContactModification(index);
+            FillContactForm(newData);
+            SubmitContactModification();
+            manager.Auth.Logout();
+            return this;
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.XPath("(//input[@name='update'])")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])["+ index + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper Remove(int index)
+        {
+            SelectContact(index);
+            RemoveContact();
+            manager.Auth.Logout();
+            return this;
+        }
+
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
 
