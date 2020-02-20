@@ -19,11 +19,19 @@ namespace addressbook_web_tests
         }
         public void GoToHomePage()
         {
+            if(driver.Url == baseURL || driver.Url == baseURL+ "/index.php")
+            {
+                return;
+            }
             driver.Navigate().GoToUrl(baseURL);
         }
 
         public void GoToGroupsPage()
         {
+            if(driver.Url==baseURL+ "/group.php" && IsElementPresent(By.Name("new")))
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("groups")).Click();
         }
     }

@@ -17,7 +17,12 @@ namespace addressbook_web_tests
             this.firstname = firstname;
             this.lastname = lastname;
         }
-
+        public ContactData(string firstname, string lastname, string nickname)
+        {
+            this.firstname = firstname;
+            this.lastname = lastname;
+            this.nickname = nickname;
+        }
         public string FirstName
         {
             get
