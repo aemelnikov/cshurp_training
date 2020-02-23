@@ -17,6 +17,11 @@ namespace addressbook_web_tests
             newData.Header = "modified test header";
             newData.Footer = "modified test footer";
 
+            if (!app.Groups.IsGroupExist())
+            {
+                app.Groups.Create(new GroupData("NewGroupName", "NewGroupHeader", "NewGroupFooter"));
+            }
+
             app.Groups.Modify(1, newData);
         }
     }

@@ -65,10 +65,7 @@ namespace addressbook_web_tests
 
         public ContactHelper SelectContact(int index)
         {
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
-            {
-                Create(new ContactData("NewUserName", "NewUserLastName", "NewUserNickName"));
-            }
+
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
@@ -92,6 +89,11 @@ namespace addressbook_web_tests
         {
             driver.FindElement(By.Name("submit")).Click();
             return this;
+        }
+
+        public bool IsContactExist()
+        {
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])"));
         }
     }
 }

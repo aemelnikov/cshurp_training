@@ -80,10 +80,7 @@ namespace addressbook_web_tests
         }
         public GroupHelper SelectGroup(int index)
         {
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])")))
-            {
-                Create(new GroupData("NewGroupName", "NewGroupHeader", "NewGroupFooter"));
-            }
+
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
@@ -96,6 +93,11 @@ namespace addressbook_web_tests
         {
             driver.FindElement(By.LinkText("group page")).Click();
             return this;
+        }
+
+        public bool IsGroupExist()
+        {
+            return IsElementPresent(By.XPath("(//input[@name='selected[]'])"));
         }
     }
 }

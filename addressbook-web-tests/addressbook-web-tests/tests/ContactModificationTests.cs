@@ -13,8 +13,14 @@ namespace addressbook_web_tests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData newData = new ContactData("TestFirstName", "TestLastName");
-            newData.NickName = "TestNickname";
+            ContactData newData = new ContactData("ModifiedFirstName", "ModifiedLastName");
+            newData.NickName = "ModifiedNickname";
+
+            if (!app.Contacts.IsContactExist())
+            {
+                app.Contacts.Create(new ContactData("NewUserName", "NewUserLastName", "NewUserNickName"));
+            }
+
             app.Contacts.Modify(1, newData);
         }
     }
