@@ -21,7 +21,7 @@ namespace addressbook_web_tests
                 app.Contacts.Create(new ContactData("NewUserName", "NewUserLastName", "NewUserNickName"));
             }
 
-            app.Contacts.Modify(1, newData);
+            app.Contacts.Modify(0, newData);
         }
     }
 }
