@@ -17,7 +17,13 @@ namespace addressbook_web_tests
             {
                 app.Contacts.Create(new ContactData("NewUserName", "NewUserLastName", "NewUserNickName"));
             }
+
+            List<ContactData> oldContacts= app.Contacts.GetContactList();
             app.Contacts.Remove(0);
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.RemoveAt(0);
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }
