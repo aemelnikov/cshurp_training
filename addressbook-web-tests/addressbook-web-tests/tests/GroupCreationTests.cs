@@ -50,23 +50,5 @@ namespace addressbook_web_tests
             Assert.AreEqual(oldGroups, newGroups);
         }
 
-        [Test]
-        public void BadNameGroupCreationTest()
-        {
-            GroupData group = new GroupData("ds'dfs");
-            group.Header = "";
-            group.Footer = "";
-
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-
-            app.Groups.Create(group);
-
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups.Add(group);
-            oldGroups.Sort();
-            newGroups.Sort();
-
-            Assert.AreEqual(oldGroups, newGroups);
-        }
     }
 }
