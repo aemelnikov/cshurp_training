@@ -30,6 +30,7 @@ namespace addressbook_web_tests
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
         public string WorkPhone { get; set; }
+        public string SecondaryHomePhone { get; set; }
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Email3 { get; set; }
@@ -43,7 +44,7 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3).Trim();
+                    return EmailCleanUp(Email) + EmailCleanUp(Email2) + EmailCleanUp(Email3).Trim();
                 }
             }
             set
@@ -61,7 +62,7 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone).Trim();
+                    return PhoneCleanUp(HomePhone) + PhoneCleanUp(MobilePhone) + PhoneCleanUp(WorkPhone)+ PhoneCleanUp(SecondaryHomePhone).Trim();
                 }
             }
             set
@@ -70,13 +71,22 @@ namespace addressbook_web_tests
             }
         }
 
-        private string CleanUp(string textField)
+        private string PhoneCleanUp(string phone)
         {
-           if (textField == null|| textField=="")
+           if (phone == null|| phone=="")
             {
                 return "";
             }
-            return Regex.Replace(textField, @"[- ()]", "") + "\r\n";
+            return Regex.Replace(phone, @"[- ()]", "") + "\r\n";
+        }
+
+        private string EmailCleanUp(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return email.Trim() + "\r\n";
         }
 
         public bool Equals(ContactData other)

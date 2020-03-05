@@ -14,8 +14,8 @@ namespace addressbook_web_tests
         [Test]
         public void TestContactMainPageInformation() 
         {
-            ContactData fromTable = app.Contacts.GetContactInformationFromTable(9);
-            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(9);
+            ContactData fromTable = app.Contacts.GetContactInformationFromTable(0);
+            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
 
             Assert.AreEqual(fromTable, fromForm);
             Assert.AreEqual(fromTable.Address, fromForm.Address);
