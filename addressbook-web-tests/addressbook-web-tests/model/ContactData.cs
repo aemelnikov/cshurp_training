@@ -11,6 +11,7 @@ namespace addressbook_web_tests
     {
         private string allPhones;
         private string allEmails;
+        private string allDetails;
 
         public ContactData(string firstname, string lastname)
         {
@@ -23,17 +24,32 @@ namespace addressbook_web_tests
             this.LastName = lastname;
             this.NickName = nickname;
         }
+
+        public ContactData()
+        {
+        }
+
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string MiddleName { get; set; }
         public string NickName { get; set; }
+        public string Company { get; set; }
+        public string Title { get; set; }
         public string Address { get; set; }
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
         public string WorkPhone { get; set; }
-        public string SecondaryHomePhone { get; set; }
+        public string Fax { get; set; }
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Email3 { get; set; }
+        public string Homepage { get; set; }
+        public string SecondaryHomePhone { get; set; }
+        public string SecondaryAddress { get; set; }
+        public string Notes { get; set; }
+        public ContactDateData Birthday { get; set; }
+        public ContactDateData Anniversary { get; set; }
+
         public string AllEmails
         {
             get
@@ -44,7 +60,7 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return EmailCleanUp(Email) + EmailCleanUp(Email2) + EmailCleanUp(Email3).Trim();
+                    return CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3).Trim();
                 }
             }
             set
@@ -71,6 +87,58 @@ namespace addressbook_web_tests
             }
         }
 
+        public string AllDetails
+        {
+            get
+            {
+                if (allDetails != null)
+                {
+                    return allDetails;
+                }
+                else
+                {
+                    string fullName = FirstName + " " + MiddleName + " " + LastName;
+                    string mainData = CleanUp(fullName) + CleanUp(NickName) + CleanUp(Title) + CleanUp(Company) + CleanUp(Address);
+
+                    string homePhoneString = String.IsNullOrEmpty(HomePhone) ? "" : @"H: " + HomePhone.Trim() + "\r\n";
+                    string mobilePhoneString = String.IsNullOrEmpty(MobilePhone) ? "" : @"M: " + MobilePhone.Trim() + "\r\n";
+                    string workPhoneString = String.IsNullOrEmpty(WorkPhone) ? "" : @"W: " + WorkPhone.Trim() + "\r\n";
+                    string faxString = String.IsNullOrEmpty(Fax) ? "" : @"F: " + Fax.Trim() + "\r\n";
+                    string phoneData = AddEmptyRow(homePhoneString + mobilePhoneString + workPhoneString + faxString);
+
+                    string homepageString = String.IsNullOrEmpty(Homepage) ? "" : "Homepage:\r\n" + Homepage.Trim() + "\r\n";
+                    string emailData = AddEmptyRow(CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3) + homepageString);
+                    string birthdayString = String.IsNullOrEmpty(Birthday.ToSrting()) ? "" : @"Birthday " + Birthday.ToSrting() + "\r\n";
+                    string anniversaryString = String.IsNullOrEmpty(Anniversary.ToSrting()) ? "" : @"Anniversary " + Anniversary.ToSrting() + "\r\n";
+                    string dateData = String.IsNullOrEmpty(AddEmptyRow(birthdayString + anniversaryString))? "\r\n": AddEmptyRow(birthdayString + anniversaryString);
+
+                    string secondaryAddressData = AddEmptyRow(CleanUp(SecondaryAddress));
+                    string secondaryPhoneString = String.IsNullOrEmpty(SecondaryHomePhone) ? "" : @"P: " + SecondaryHomePhone.Trim() + "\r\n";
+                    string secondaryPhoneData = AddEmptyRow(secondaryPhoneString);
+                    string notesData = AddEmptyRow(CleanUp(Notes));
+
+                    string allData = mainData + phoneData + emailData + dateData + secondaryAddressData + secondaryPhoneData + notesData;
+                    return Regex.Replace(allData, "[ ]+", " ").Trim(); 
+                }
+            }
+            set
+            {
+                allDetails = value;
+            }
+        }
+
+        private string AddEmptyRow(string text)
+        {
+            if (String.IsNullOrEmpty(text))
+            {
+                return "";
+            }
+            else
+            {
+                return "\r\n" + text;
+            }
+        }
+
         private string PhoneCleanUp(string phone)
         {
            if (phone == null|| phone=="")
@@ -80,13 +148,13 @@ namespace addressbook_web_tests
             return Regex.Replace(phone, @"[- ()]", "") + "\r\n";
         }
 
-        private string EmailCleanUp(string email)
+        private string CleanUp(string test)
         {
-            if (email == null || email == "")
+            if (test == null || test == "")
             {
                 return "";
             }
-            return email.Trim() + "\r\n";
+            return test.Trim() + "\r\n";
         }
 
         public bool Equals(ContactData other)
