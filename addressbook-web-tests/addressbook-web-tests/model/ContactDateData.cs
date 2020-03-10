@@ -8,6 +8,10 @@ namespace addressbook_web_tests
 {
     public class ContactDateData
     {
+        public ContactDateData()
+        {
+
+        }
         public string Day { get; set; }
         public string Mounth { get; set; }
         public string Year { get; set; }

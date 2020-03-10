@@ -27,6 +27,8 @@ namespace addressbook_web_tests
 
         public ContactData()
         {
+            this.Birthday = new ContactDateData();
+            this.Anniversary = new ContactDateData();
         }
 
         public string FirstName { get; set; }
