@@ -10,6 +10,8 @@ namespace addressbook_web_tests
 {
     public class TestBase
     {
+        public static bool PERFOM_LONG_UI_CHECK = true;
+
         protected ApplicationManager app;
         [SetUp]
         public void SetupApplicationManager()
@@ -25,7 +27,7 @@ namespace addressbook_web_tests
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < l; i++)
             {
-                builder.Append(Convert.ToChar(32 + Convert.ToInt32(rnd.NextDouble() * 65)));
+                builder.Append(Convert.ToChar(65 + Convert.ToInt32(rnd.NextDouble() * 25)));
             }
 
             return builder.ToString();
