@@ -18,16 +18,20 @@ namespace mantis_tests
         public RegistrationHelper Registration { get; protected set; }
         public FtpHelper Ftp { get; protected set; }
         public LoginHelper Auth { get; protected set; }
+        public ProjectManagementHelper Projects { get; protected set; }
+        public ManagementMenuHelper MenageMenu { get; protected set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
         {
             driver = new ChromeDriver();
-            baseURL = "http://localhost/mantisbt-2.24.0/login_page.php";
+            baseURL = "http://localhost/mantisbt-2.24.0";
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
             Auth = new LoginHelper(this);
+            Projects = new ProjectManagementHelper(this);
+            MenageMenu = new ManagementMenuHelper(this, baseURL);
         }
 
         ~ApplicationManager()

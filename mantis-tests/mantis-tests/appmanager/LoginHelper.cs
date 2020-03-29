@@ -27,8 +27,9 @@ namespace mantis_tests
                 }
                 Logout();
             }
-            Type(By.Name("user"), account.Name);
-            Type(By.Name("pass"), account.Password);
+            Type(By.Name("username"), account.Name);
+            driver.FindElement(By.XPath("//input[@value='Login']")).Click();
+            Type(By.Name("password"), account.Password);
             driver.FindElement(By.XPath("//input[@value='Login']")).Click();
         }
 
@@ -49,7 +50,8 @@ namespace mantis_tests
         {
             if (IsLoggedIn())
             {
-                driver.FindElement(By.LinkText("Logout")).Click();
+                driver.FindElements(By.CssSelector("a.dropdown-toggle"))[1].Click();
+                driver.FindElement(By.XPath("//a[text()=' Logout']")).Click();
             }
 
         }
