@@ -13,6 +13,17 @@ namespace addressbook_web_tests
         [Test]
         public void RemovingContactFromGroupTest()
         {
+
+            if (GroupData.GetAll().Count == 0)
+            {
+                app.Groups.Create(new GroupData("NewGroupName", "NewGroupHeader", "NewGroupFooter"));
+            }
+
+            if (ContactData.GetAll().Count == 0)
+            {
+                app.Contacts.Create(new ContactData("NewUserName", "NewUserLastName", "NewUserNickName"));
+            }
+
             GroupData group = new GroupData();
             foreach (GroupData g in GroupData.GetAll())
             {
@@ -23,7 +34,11 @@ namespace addressbook_web_tests
                 }
             }
 
-            Assert.IsTrue(group.Id != null, "All groups are empty");
+           if (group.Id == null)
+            {
+                app.Contacts.AddContactToGroup(ContactData.GetAll()[0], GroupData.GetAll()[0]);
+                group = GroupData.GetAll()[0];
+            }
 
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = oldList[0];
