@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -19,7 +19,25 @@ namespace mantis_tests
             OpenRegistrationForm();
             FillRegistrationForm(account);
             SubmitRegistration();
+            String url = GetConfirmationUrl(account);
+            FillPasswordForm(url);
+            SublitPasswordForm();
+        }
 
+        private void SublitPasswordForm()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void FillPasswordForm(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        private string GetConfirmationUrl(AccountData account)
+        {
+            string message = manager.Mail.GetLastMail(account);
+            return Regex.Match(message, @"http://\S*").Value;
         }
 
         private void OpenRegistrationForm()

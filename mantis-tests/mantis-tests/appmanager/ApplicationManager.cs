@@ -20,6 +20,9 @@ namespace mantis_tests
         public LoginHelper Auth { get; protected set; }
         public ProjectManagementHelper Projects { get; protected set; }
         public ManagementMenuHelper MenageMenu { get; protected set; }
+        public JamesHelper James { get; protected set; }
+        public MailHelper Mail { get; protected set; }
+        public APIHelper API { get; protected set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -32,6 +35,9 @@ namespace mantis_tests
             Auth = new LoginHelper(this);
             Projects = new ProjectManagementHelper(this);
             MenageMenu = new ManagementMenuHelper(this, baseURL);
+            James = new JamesHelper(this);
+            Mail = new MailHelper(this);
+            API = new APIHelper(this);
         }
 
         ~ApplicationManager()
